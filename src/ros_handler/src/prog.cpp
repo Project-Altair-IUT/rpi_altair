@@ -27,7 +27,7 @@ void rcCallback(const std_msgs::Int16MultiArray& msg)
   for(int i=0; i<8; i++)
     ch[i] = msg.data[i];
 
-  ROS_INFO("%d", ch[0]);
+//   ROS_INFO("%d", ch[0]);
 }
 
 int main(int argc, char **argv)
