@@ -14,4 +14,4 @@
 - Run in the master computer:
 - ```cd erc_ws```
 - ```source devel/setup.bash```
-- ```roslaunch ros_handdler navigation.launch```
+- ```roslaunch ros_handler navigation.launch```
