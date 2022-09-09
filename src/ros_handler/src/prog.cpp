@@ -64,7 +64,7 @@ int main(int argc, char **argv)
   while(ros::ok()){
 
     velocity.linear.x = rangeMap(ch[2], rc_min, rc_max, linear_min, linear_max);
-    velocity.angular.z = rangeMap(ch[3], rc_min, rc_max, angular_min, angular_max);
+    velocity.angular.z = -rangeMap(ch[3], rc_min, rc_max, angular_min, angular_max);
 
     cmd_vel.publish(velocity);
      
