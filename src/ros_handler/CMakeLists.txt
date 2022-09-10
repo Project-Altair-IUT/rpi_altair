@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  geometry_msgs
   genmsg
 )
 
@@ -214,4 +215,8 @@ include_directories(
 
 add_executable(prog src/prog.cpp)
 target_link_libraries(prog ${catkin_LIBRARIES})
+add_executable(prog1 src/prog1.cpp)
+target_link_libraries(prog1 ${catkin_LIBRARIES})
+add_executable(prog2 src/prog2.cpp)
+target_link_libraries(prog2 ${catkin_LIBRARIES})
 #add_dependencies(listener beginner_tutorials_generate_messages_cpp)
