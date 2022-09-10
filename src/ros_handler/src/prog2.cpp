@@ -48,56 +48,49 @@ int main(int argc, char **argv)
     sci_msg.data.clear();
 
     if(ch[4] >= 1750 and ch[4] <= 2000)
-    if(0)
     {
       //actuator
         if(ch[6] >= 1000 and ch[6] <= 1200)
-          sci_msg.data[0] = 2;
+          sci_msg.data.push_back(2);
         else if(ch[6] >= 1300 and ch[6] <= 1700)
-          sci_msg.data[0] = 0;
+          sci_msg.data.push_back(0);
         else if(ch[6] >= 1750 and ch[6] <= 2000)
-          sci_msg.data[0] = 1;
+          sci_msg.data.push_back(1);
 
 
       //carousel servo
         if(ch[7] >= 1000 and ch[6] <= 1200)
-          sci_msg.data[1] = 0;
+          sci_msg.data.push_back(0);
         else if(ch[7] >= 1300 and ch[6] <= 1700)
-          sci_msg.data[1] = 1;
+          sci_msg.data.push_back(1);
         else if(ch[7] >= 1750 and ch[6] <= 2000)
-          sci_msg.data[1] = 2;
+          sci_msg.data.push_back(2);
 
       //auger
         if(ch[2] >= 1000 and ch[6] <= 1200)
-          sci_msg.data[2] = 2;
+          sci_msg.data.push_back(2);
         else if(ch[2] >= 1300 and ch[6] <= 1700)
-          sci_msg.data[2] = 0;
+          sci_msg.data.push_back(0);
         else if(ch[2] >= 1750 and ch[6] <= 2000)
-          sci_msg.data[2] = 1;
+          sci_msg.data.push_back(1);
 
       //semi-auto
         if(ch[5] >= 1000 and ch[6] <= 1200)
-          sci_msg.data[0] = 0;
+          sci_msg.data.push_back(0);
         else if(ch[5] >= 1300 and ch[6] <= 1700)
-          sci_msg.data[0] = 1;
+          sci_msg.data.push_back(1);
         else if(ch[5] >= 1750 and ch[6] <= 2000)
-          sci_msg.data[0] = 2;
+          sci_msg.data.push_back(2);
     }
     else
     {
-      sci_msg.data.push_back(0);
-      sci_msg.data.push_back(0);
-      sci_msg.data.push_back(0);
-      sci_msg.data.push_back(0);
+      for(int i=0; i<4; i++)
+        sci_msg.data.push_back(0);
+      
     }
-    int8_t xxr = 0;
-    int16_t arr[4] = {1,2,3,4};
-    sci_msg.data.push_back(0);
     
-
     science_cmd.publish(sci_msg);
 
-     
     rate.sleep();
     ros::spinOnce();      //Notice this
 
