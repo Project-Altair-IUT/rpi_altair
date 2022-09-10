@@ -1,9 +1,9 @@
 <launch>
-<node pkg="rosserial_arduino" type="serial_node.py" name="crsf_ros" output="screen"
+<node pkg="rosserial_arduino" type="serial_node.py" name="crsf_NANO" output="screen"
 args="_port:=/dev/ttyACM0 _baud:=57600" />
-<node pkg="rosserial_arduino" type="serial_node.py" name="wheel_drive" output="screen"
+<node pkg="rosserial_arduino" type="serial_node.py" name="wheel_DUE" output="screen"
 args="_port:=/dev/ttyACM1 _baud:=115200" />
-<node pkg="rosserial_arduino" type="serial_node.py" name="arm" output="screen"
+<node pkg="rosserial_arduino" type="serial_node.py" name="arm_DUE" output="screen"
 args="_port:=/dev/ttyACM2 _baud:=115200" />
 <node name="wheel" pkg="ros_handler" type="prog" output="screen" />
 <node name="arm" pkg="ros_handler" type="prog1" output="screen" />
