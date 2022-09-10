@@ -22,7 +22,8 @@
 
 int16_t ch[8];
 int8_t arm_arr[6];
-std_msgs::Int8MultiArray arm_msg;
+
+
 
 float rangeMap(int16_t x, int16_t in_min, int16_t in_max, float out_min, float out_max)
 {
@@ -56,15 +57,16 @@ int main(int argc, char **argv)
   
   ros::Publisher cmd_vel = n.advertise<geometry_msgs::Twist>("cmd_vel", 100);
   ros::Publisher arm_cmd = n.advertise<std_msgs::Int8MultiArray>("arm_cmd", 10);
-  ros::Publisher col_cmd = n.advertise<std_msgs::Int8MultiArray>("col_cmd", 10);
+  ros::Publisher science_cmd = n.advertise<std_msgs::Int8MultiArray>("science_cmd", 10);
 
 
   ros::Rate rate(10);
   
-  geometry_msgs::Twist velocity;
+  geometry_msgs::Twist velocity;  
+  
+  std_msgs::Int8MultiArray arm_msg;
 
-  
-  
+  std_msgs::Int8MultiArray sci_msg;
 
   
   ros::Subscriber sub = n.subscribe("rc_signal", 100, rcCallback);
@@ -82,6 +84,11 @@ int main(int argc, char **argv)
     for(int i=0; i<6; i++)
     {
       arm_msg.data[i] = 0;
+    }
+
+    for(int i=0; i<4; i++)
+    {
+      sci_msg.data[i] = 0;
     }
 
     if(ch[4]>=1000 and ch[4] <= 1200)
@@ -102,14 +109,48 @@ int main(int argc, char **argv)
 
       // arm_msg.data_length = 6;
     }
-//     else if(ch[4] >= 1750 and ch[4] <= 2000)
-//     {
+    else if(ch[4] >= 1750 and ch[4] <= 2000)
+    {
+      //actuator
+        if(ch[6] >= 1000 and ch[6] <= 1200)
+          sci_msg.data[0] = 2;
+        else if(ch[6] >= 1300 and ch[6] <= 1700)
+          sci_msg.data[0] = 0;
+        else if(ch[6] >= 1750 and ch[6] <= 2000)
+          sci_msg.data[0] = 1;
 
-//     }
 
-    arm_cmd.publish(arm_msg);
+      //carousel servo
+        if(ch[7] >= 1000 and ch[6] <= 1200)
+          sci_msg.data[1] = 0;
+        else if(ch[7] >= 1300 and ch[6] <= 1700)
+          sci_msg.data[1] = 1;
+        else if(ch[7] >= 1750 and ch[6] <= 2000)
+          sci_msg.data[1] = 2;
+
+      //auger
+        if(ch[2] >= 1000 and ch[6] <= 1200)
+          sci_msg.data[2] = 2;
+        else if(ch[2] >= 1300 and ch[6] <= 1700)
+          sci_msg.data[2] = 0;
+        else if(ch[2] >= 1750 and ch[6] <= 2000)
+          sci_msg.data[2] = 1;
+
+      //semi-auto
+        if(ch[5] >= 1000 and ch[6] <= 1200)
+          sci_msg.data[0] = 0;
+        else if(ch[5] >= 1300 and ch[6] <= 1700)
+          sci_msg.data[0] = 1;
+        else if(ch[5] >= 1750 and ch[6] <= 2000)
+          sci_msg.data[0] = 2;
+    }
     
     cmd_vel.publish(velocity);
+
+    arm_cmd.publish(arm_msg);
+
+    science_cmd.publish(arm_msg);
+
      
     rate.sleep();
     ros::spinOnce();      //Notice this
