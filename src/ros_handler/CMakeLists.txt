@@ -208,8 +208,8 @@ include_directories(
 
 
 
-#add_executable(publisher src/publisher.cpp)
-#target_link_libraries(publisher ${catkin_LIBRARIES})
+add_executable(publisher src/publisher.cpp)
+target_link_libraries(publisher ${catkin_LIBRARIES})
 #add_dependencies(talker beginner_tutorials_generate_messages_cpp)
 
 add_executable(prog src/prog.cpp)
