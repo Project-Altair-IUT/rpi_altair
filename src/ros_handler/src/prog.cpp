@@ -102,10 +102,10 @@ int main(int argc, char **argv)
 
       // arm_msg.data_length = 6;
     }
-    else if(ch[4] >= 1750 and ch[4] <= 2000)
-    {
+//     else if(ch[4] >= 1750 and ch[4] <= 2000)
+//     {
 
-    }
+//     }
 
     arm_cmd.publish(arm_msg);
     
