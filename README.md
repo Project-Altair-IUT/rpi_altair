@@ -1,4 +1,5 @@
-# erc_ws
+# rpi altair 
+raspberry pi ros workspace
 ### initial setup:
 - clone the repo, it's  a whole workspace. 
 
