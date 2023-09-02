@@ -1,18 +1,17 @@
-# rpi altair 
+# rpi_altair 
 raspberry pi ros workspace
 ### initial setup:
 - clone the repo, it's  a whole workspace. 
 
-- ```cd erc_ws```
+- ```cd rpi_altair```
 - ```catkin_make```
 
 ## Usage:
 
-- First connect the crossfire connected arduino nano.
+- First connect the crossfire connected arduino to the raspberry pi / control computer.
 - Then connect the Drive arduino due.
-- Then start roscore in the master computer.
+- Then start roscore in the raspberry pi / control computer.
 
 - Run in the master computer:
-- ```cd erc_ws```
+- ```cd rpi_altair```
 - ```source devel/setup.bash```
-- ```roslaunch ros_handler navigation.launch```
