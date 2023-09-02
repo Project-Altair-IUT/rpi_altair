@@ -1,15 +1,9 @@
-/* Bismillah
-  code written by 
-  A. K. M. Rakinuzzaman
-  for Team Avijatrik
-*/
+/* Bismillah */
 
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "std_msgs/Int16.h"
-#include "std_msgs/Int8.h"
 #include <std_msgs/Int16MultiArray.h>
-#include <std_msgs/Int8MultiArray.h>
 #include <geometry_msgs/Twist.h>
 
 #define rc_min 1000
@@ -22,6 +16,8 @@
 
 int16_t ch[8];
 int8_t arm_arr[6];
+
+#define wheels_armed (ch[4]>=1000 and ch[4] <= 1200)
 
 
 
@@ -37,24 +33,21 @@ void rcCallback(const std_msgs::Int16MultiArray& msg)
 {
   for(int i=0; i<8; i++)
     ch[i] = msg.data[i];
-
 //   ROS_INFO("%d", ch[0]);
 }
 
 int main(int argc, char **argv)
 {
-  
-  ros::init(argc, argv, "prog");
-
-
   ros::NodeHandle n;
   
   ros::Publisher cmd_vel = n.advertise<geometry_msgs::Twist>("cmd_vel", 100);
 
   ros::Rate rate(10);
   
-  geometry_msgs::Twist velocity;  
+  geometry_msgs::Twist velocity;
   
+  ros::init(argc, argv, "rc_to_cmd_vel_generator");
+
   ros::Subscriber sub = n.subscribe("rc_signal", 100, rcCallback);
 
   velocity.linear.y = 0.0;
@@ -64,7 +57,7 @@ int main(int argc, char **argv)
   
   while(ros::ok()){
 
-    if(ch[4]>=1000 and ch[4] <= 1200)
+    if(wheels_armed)
     {
       //rover drive
       velocity.linear.x = rangeMap(ch[2], rc_min, rc_max, linear_min, linear_max);
