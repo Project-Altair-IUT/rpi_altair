@@ -1,23 +1,25 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 from geometry_msgs.msg import Twist
 from std_msgs.msg import Int16
+
+def constrain(val, min_val, max_val):
+    return min(max(val, min_val), max_val)
 
 class MotorController:
     def __init__(self):
         rospy.init_node('motor_controller')
         self.pub_wheel_l = rospy.Publisher('wheel_L', Int16, queue_size=10)
         self.pub_wheel_r = rospy.Publisher('wheel_R', Int16, queue_size=10)
-        self.speed_range_min = 1000
-        self.speed_range_max = 2000
 
     def cmd_vel_callback(self, cmd_vel):
-        x = int(cmd_vel.linear.x * (self.speed_range_max - self.speed_range_min) + self.speed_range_min)
-        z = int(cmd_vel.angular.z * (self.speed_range_max - self.speed_range_min) + self.speed_range_min)
+        x = cmd_vel.linear.x
+        z = cmd_vel.angular.z
 
-        lv = max(min(x + z // 2, self.speed_range_max), self.speed_range_min)
-        rv = max(min(x - z // 2, self.speed_range_max), self.speed_range_min)
+        # Map linear and angular velocities to motor speeds
+        lv = constrain(int(x * 500 + z * 500 / 2)+1500, 1000, 2000)
+        rv = constrain(int(x * 500 - z * 500 / 2)+1500, 1000, 2000)
 
         wheel_l_msg = Int16()
         wheel_l_msg.data = lv
@@ -26,6 +28,9 @@ class MotorController:
         wheel_r_msg = Int16()
         wheel_r_msg.data = rv
         self.pub_wheel_r.publish(wheel_r_msg)
+
+        print(lv)
+        print(rv)
 
 if __name__ == '__main__':
     try:

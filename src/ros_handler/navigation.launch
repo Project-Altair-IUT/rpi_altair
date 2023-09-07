@@ -1,7 +1,12 @@
 <launch>
 <node pkg="rosserial_arduino" type="serial_node.py" name="crsf_NANO" output="screen"
-args="_port:=/dev/ttyUSB0 _baud:=57600" />
-<node pkg="rosserial_arduino" type="serial_node.py" name="arm_bluepill" output="screen"
 args="_port:=/dev/ttyACM0 _baud:=57600" />
+<node pkg="rosserial_arduino" type="serial_node.py" name="arm_bluepill" output="screen"
+args="_port:=/dev/ttyACM1 _baud:=57600" />
+<node pkg="rosserial_arduino" type="serial_node.py" name="arm_bluepill2" output="screen"
+args="_port:=/dev/ttyACM2 _baud:=57600" />
+<node pkg="rosserial_arduino" type="serial_node.py" name="arm_bluepill3" output="screen"
+args="_port:=/dev/ttyACM3 _baud:=57600" />
+
 <node name="driver" pkg="ros_handler" type="prog" output="screen" />
 </launch>
